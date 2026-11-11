@@ -23,4 +23,10 @@ vim.keymap.set('n', '<leader>fls', builtin.live_grep, { desc = 'Telescope live g
 vim.keymap.set('n', '<leader>fc', builtin.current_buffer_fuzzy_find, { desc = 'Fuzzy find string in current buffer' })
 vim.keymap.set('n', '<leader>fo', builtin.oldfiles, { desc = 'Telescope old files' })
 
-
+-- Treesitter
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'python', 'lua', 'c', 'c++' },
+  callback = function()
+      vim.treesitter.start()
+  end,
+})
