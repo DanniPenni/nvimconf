@@ -25,8 +25,10 @@ vim.keymap.set('n', '<leader>fo', builtin.oldfiles, { desc = 'Telescope old file
 
 -- Treesitter
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'python', 'lua', 'c', 'c++' },
+  pattern = {'python', 'cpp', 'c', 'rust', 'javascript', 'lua', 'zsh', 'editorconfig', 'dockerfile'},
   callback = function()
       vim.treesitter.start()
+      -- indentation, provided by nvim-treesitter
+      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
   end,
 })

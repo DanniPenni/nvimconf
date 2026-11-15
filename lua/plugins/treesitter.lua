@@ -2,6 +2,10 @@ return {
     {
       'nvim-treesitter/nvim-treesitter',
       lazy = false,
-      build = ':TSUpdate'
+      build = ':TSUpdate',
+      config = function()
+          require('nvim-treesitter').setup({})
+          require('nvim-treesitter').install {'python', 'cpp', 'c', 'rust', 'javascript', 'lua', 'zsh', 'editorconfig', 'dockerfile' }
+      end,
     },
 }
