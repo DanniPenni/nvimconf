@@ -29,6 +29,7 @@ return {
               { "<leader>l", group = "lsp", icon={ icon='', color='green', }, },
               { "<leader>-", group = "yazi", icon={ icon='󰈔', color='blue', }, },
               { "<leader>n", group = "nerdy", icon={ icon='󰦨', color='blue', }, },
+              { "<leader>x", group = "trouble", icon={ icon='', color='red', }, },
           })
           wk.setup(opts)
       end,
