@@ -19,7 +19,7 @@ vim.g.mapleader = vim.keycode('<Space>')
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
 vim.keymap.set('n', '<leader>fs', builtin.grep_string, { desc = 'Telescope grep selected string' })
-vim.keymap.set('n', '<leader>fls', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fl', builtin.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>fc', builtin.current_buffer_fuzzy_find, { desc = 'Fuzzy find string in current buffer' })
 vim.keymap.set('n', '<leader>fo', builtin.oldfiles, { desc = 'Telescope old files' })
 
