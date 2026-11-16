@@ -38,35 +38,26 @@ vim.diagnostic.config({
   underline = false,
   virtual_text = false,
   virtual_lines = false,
+  jump = { float = true },
+  float = {
+    header = false,
+    border = 'rounded',
+    focusable = false,
+    scope = 'cursor',
+    close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter' },
+  },
 })
 
 
 ---@param jumpCount number
-local function jumpAndDiag(jumpCount)
-	pcall(vim.api.nvim_del_augroup_by_name, "jumpAndDiag") -- prevent autocmd for repeated jumps
-
+local function centreJump(jumpCount)
+	pcall(vim.api.nvim_del_augroup_by_name, "centreJump") -- prevent autocmd for repeated jumps
 	vim.diagnostic.jump { count = jumpCount }
   vim.cmd("normal! zz")
-
-	vim.diagnostic.config {
-		virtual_text = false,
-		virtual_lines = { current_line = true },
-	}
-
-	vim.defer_fn(function() -- deferred to not trigger by jump itself
-		vim.api.nvim_create_autocmd("CursorMoved", {
-			desc = "User(once): Reset diagnostics virtual lines",
-			once = true,
-			group = vim.api.nvim_create_augroup("jumpAndDiag", {}),
-			callback = function()
-				vim.diagnostic.config { virtual_lines = false }
-			end,
-		})
-	end, 1)
 end
 
-vim.keymap.set("n", "]d", function() jumpAndDiag(1) end, { desc = "Next diagnostic" })
-vim.keymap.set("n", "[d", function() jumpAndDiag(-1) end, { desc = "Prev diagnostic" })
+vim.keymap.set("n", "]d", function() centreJump(1) end, { desc = "Next diagnostic" })
+vim.keymap.set("n", "[d", function() centreJump(-1) end, { desc = "Prev diagnostic" })
 
 -- LSP
 
