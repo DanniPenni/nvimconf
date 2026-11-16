@@ -1,5 +1,5 @@
 -- Editor setings 
-vim.o.wrap = false 
+vim.o.wrap = false
 vim.o.number = true
 
 vim.o.tabstop = 2
@@ -8,9 +8,9 @@ vim.o.shiftwidth = 2
 vim.opt.expandtab = true
 
 vim.o.smartcase = true
-vim.o.ignorecase = true 
+vim.o.ignorecase = true
 
-vim.o.hlsearch = false 
+vim.o.hlsearch = false
 
 -- Keymaps 
 vim.g.mapleader = vim.keycode('<Space>')
@@ -33,16 +33,40 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+-- Diagnostic 
+vim.diagnostic.config({
+  underline = false,
+  virtual_text = false,
+  virtual_lines = false,
+})
+
+--- @param diagnostic? vim.Diagnostic
+--- @param bufnr integer
+local function on_jump(diagnostic, bufnr)
+  if not diagnostic then return end
+
+  vim.diagnostic.show(
+    diagnostic.namespace,
+    bufnr,
+    { diagnostic },
+    { virtual_lines = { current_line = true }, virtual_text = false }
+  )
+end
+
+vim.diagnostic.config({ jump = { on_jump = on_jump } })
+
+-- LSP
+
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup("ruff-basedpyright-setup", { clear = true }),
   callback = function(ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
     if client.name == 'ruff' then
       client.server_capabilities.hoverProvider = false
-    end 
+    end
 
     -- LSP keybinds
-    vim.keymap.set({'n', 'v'}, '<leader>ca', vim.lsp.buf.code_action, { buffer=ev.buf, desc='Code actions' } ) 
+    vim.keymap.set({'n', 'v'}, '<leader>ca', vim.lsp.buf.code_action, { buffer=ev.buf, desc='Code actions' } )
     vim.keymap.set('n', '<leader>df', vim.lsp.buf.definition, { buffer=ev.buf, desc='Definitions' } )
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { buffer=ev.buf, desc='Rename symbol' } )
     vim.keymap.set('n', '<leader>fm', vim.lsp.buf.format, { buffer=ev.buf, desc='Format buffer' } )
