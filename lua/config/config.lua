@@ -32,3 +32,24 @@ vim.api.nvim_create_autocmd('FileType', {
       -- vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
   end,
 })
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup("ruff-basedpyright-setup", { clear = true }),
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if client.name == 'ruff' then
+      client.server_capabilities.hoverProvider = false
+    end 
+
+    -- LSP keybinds
+    vim.keymap.set({'n', 'v'}, '<leader>ca', vim.lsp.buf.code_action, { buffer=ev.buf, desc='Code actions' } ) 
+    vim.keymap.set('n', '<leader>df', vim.lsp.buf.definition, { buffer=ev.buf, desc='Definitions' } )
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { buffer=ev.buf, desc='Rename symbol' } )
+    vim.keymap.set('n', '<leader>fm', vim.lsp.buf.format, { buffer=ev.buf, desc='Format buffer' } )
+    vim.keymap.set('n', '<leader>hv', vim.lsp.buf.hover, { buffer=ev.buf, desc='Hover symbol' } )
+    vim.keymap.set('n', '<leader>rf', vim.lsp.buf.references, { buffer=ev.buf, desc='References' } )
+    vim.keymap.set('n', '<leader>ic', vim.lsp.buf.incoming_calls, { buffer=ev.buf, desc='Incoming calls' } )
+    vim.keymap.set('n', '<leader>oc', vim.lsp.buf.outgoing_calls, { buffer=ev.buf, desc='Outgoing calls' } )
+
+  end,
+})

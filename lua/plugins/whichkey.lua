@@ -26,10 +26,19 @@ return {
           wk.add({
               { "<leader>f", group = "telescope", icon={icon='󰭎', color='blue'} },
               { "<leader>g", group = "git", icon={ icon='', color='orange', }, },
-              { "<leader>l", group = "lsp", icon={ icon='', color='green', }, },
               { "<leader>-", group = "yazi", icon={ icon='󰈔', color='blue', }, },
               { "<leader>n", group = "nerdy", icon={ icon='󰦨', color='blue', }, },
               { "<leader>t", group = "trouble", icon={ icon='', color='red', }, },
+
+              { "<leader>ca", hidden=true, },
+              { "<leader>df", hidden=true, },
+              { "<leader>rn", hidden=true, },
+              { "<leader>fm", hidden=true, },
+              { "<leader>hv", hidden=true, },
+              { "<leader>rf", hidden=true, },
+              { "<leader>ic", hidden=true, },
+              { "<leader>oc", hidden=true, },
+
           })
           wk.setup(opts)
       end,
